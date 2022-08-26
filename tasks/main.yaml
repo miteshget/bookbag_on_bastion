@@ -36,6 +36,14 @@
     group: root
     mode: "u=rw,g=r,o=r"
 
+- name: Copy workshop-vars file in orchestration dir
+  template:
+    src: "workshop-vars.json.j2"
+    dest: "/opt/podman/{{ __bookbag_pod.name }}-pod/workshop-vars.json"
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+
 - name: Copy podman systemd service config
   template:
     src: "service.j2"

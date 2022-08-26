@@ -13,6 +13,6 @@ services:
     - '/opt/podman/{{ __bookbag_pod.name }}-pod/volumes/.ssh:/opt/app-root/src/.ssh:Z'
     - '/opt/podman/{{ __bookbag_pod.name }}-pod/volumes/envvars:/opt/app-root/envvars:Z'
     environment:
-      - 'AUTH_USERNAME=bob'
-      - 'AUTH_PASSWORD=redhat'
-      - 'WORKSHOP_VARS={{ lookup('template', './workshop-vars.json.j2') }}'
+      - 'AUTH_USERNAME={{ __bookbag_pod_username }}'
+      - 'AUTH_PASSWORD={{ __bookbag_pod_password }}'
+      - 'WORKSHOP_VARS={{ lookup('file', 'workshop-vars.yml') | to_json }}'

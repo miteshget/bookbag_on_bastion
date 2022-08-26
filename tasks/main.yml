@@ -2,6 +2,8 @@
 - name: Set bookbag_on_bastion variable
   set_fact:
     __bookbag_pod: "{{ bookbag_on_bastion_pods.0 }}"
+    __bookbag_pod_username: "{{ bookbag_on_bastion_pod_username }}"
+    __bookbag_pod_password: "{{ bookbag_on_bastion_pod_password }}"
 
 - name: Create podman orchestration directory
   file:
@@ -14,12 +16,12 @@
 
 - name: Create volume directory
   file:
-    path: "/opt/podman/{{ __bookbag_pod.name }}-pod/volumes/.ssh"
+    path: "/opt/podman/{{ __bookbag_pod.name }}-pod/volumes/"
     state: directory
-    owner: root
+    owner: 1001
     group: root
     recurse: true
-    mode: "u=rwx,g=rwx,o=rwx"
+    mode: "u=rwx,g=rwx,o=rx"
 
 - name: Clone git repo
   git:
@@ -27,7 +29,25 @@
     version: "{{ bookbag_on_bastion_git_version }}"
     dest: /opt/podman/{{ __bookbag_pod.name }}-pod/volumes/
     force: yes
-  
+
+- name: Create .ssh directory
+  file:
+    path: "/opt/podman/{{ __bookbag_pod.name }}-pod/volumes/.ssh"
+    state: directory
+    owner: 1001
+    group: 1001
+    recurse: true
+    mode: "0700"
+
+- name: copy private key
+  copy:
+    src: /root/.ssh/*key.pem
+    dest: "/opt/podman/{{ __bookbag_pod.name }}-pod/volumes/.ssh/id_rsa"
+    remote_src: true
+    owner: 1001
+    group: 1001
+    mode: "0400"
+
 - name: Copy podman-compose file in orchestration dir
   template:
     src: "podman-compose.yml.j2"
@@ -38,8 +58,8 @@
 
 - name: Copy workshop-vars file in orchestration dir
   template:
-    src: "workshop-vars.json.j2"
-    dest: "/opt/podman/{{ __bookbag_pod.name }}-pod/workshop-vars.json"
+    src: "workshop-vars.yml.j2"
+    dest: "/opt/podman/{{ __bookbag_pod.name }}-pod/workshop-vars.yml"
     owner: root
     group: root
     mode: "u=rw,g=r,o=r"

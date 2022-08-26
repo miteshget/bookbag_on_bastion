@@ -48,18 +48,18 @@
     group: 1001
     mode: "0400"
 
-- name: Copy podman-compose file in orchestration dir
-  template:
-    src: "podman-compose.yml.j2"
-    dest: "/opt/podman/{{ __bookbag_pod.name }}-pod/podman-compose.yml"
-    owner: root
-    group: root
-    mode: "u=rw,g=r,o=r"
-
 - name: Copy workshop-vars file in orchestration dir
   template:
     src: "workshop-vars.yml.j2"
     dest: "/opt/podman/{{ __bookbag_pod.name }}-pod/workshop-vars.yml"
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+
+- name: Copy podman-compose file in orchestration dir
+  template:
+    src: "podman-compose.yml.j2"
+    dest: "/opt/podman/{{ __bookbag_pod.name }}-pod/podman-compose.yml"
     owner: root
     group: root
     mode: "u=rw,g=r,o=r"

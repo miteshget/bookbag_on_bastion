@@ -41,7 +41,7 @@
 
 - name: copy private key
   copy:
-    src: "/root/.ssh/.*key.pem"
+    src: "/root/.ssh/{{ guid }}key.pem"
     dest: "/opt/podman/{{ __bookbag_pod.name }}-pod/volumes/.ssh/id_rsa"
     remote_src: true
     owner: 1001

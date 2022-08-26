@@ -1,6 +1,6 @@
 ---
 
-bookbag_on_bastion_git_repo: https://github.com/redhat-gpte-labs/rhtr2020_gitops_with_ansible_tower.git
+bookbag_on_bastion_git_repo: https://github.com/miteshget/gitops_bookbag_content.git
 bookbag_on_bastion_git_version: main
 bookbag_on_bastion_pods:
   - name: bookbag

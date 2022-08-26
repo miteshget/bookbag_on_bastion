@@ -14,4 +14,4 @@ services:
     environment:
       - 'AUTH_USERNAME=bob'
       - 'AUTH_PASSWORD=redhat'
-      - 'WORKSHOP_VARS={{ lookup(\'template\', \'./workshop-vars.json.j2\') }}'
+      - 'WORKSHOP_VARS={{ lookup('template', './workshop-vars.json.j2') }}'

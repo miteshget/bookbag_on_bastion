@@ -15,4 +15,4 @@ services:
     environment:
       - 'AUTH_USERNAME={{ __bookbag_pod_username }}'
       - 'AUTH_PASSWORD={{ __bookbag_pod_password }}'
-      - 'WORKSHOP_VARS={{ lookup('file', '/opt/podman/{{ __bookbag_pod.name }}-pod/workshop-vars.yml') | to_json }}'
+      - 'WORKSHOP_VARS={{ lookup('file', '/opt/podman/{{ __bookbag_pod.name }}-pod/workshop-vars.yml') | from_yaml | to_nice_json }}'

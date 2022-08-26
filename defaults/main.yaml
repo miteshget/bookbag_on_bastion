@@ -32,3 +32,4 @@ bookbag_on_bastion_pods:
                   "vscode_ui_url": "http://control.red.ops.example.com",
                   "vscode_ui_password": "redhat123"
                   }'
+# - '/opt/podman/{{ __bookbag_pod.name }}-pod/volumes/envvars:/opt/app-root/envvars:Z'

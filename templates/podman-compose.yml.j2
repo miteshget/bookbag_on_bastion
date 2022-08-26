@@ -10,7 +10,6 @@ services:
     volumes:
     - '/opt/podman/{{ __bookbag_pod.name }}-pod/volumes/workshop:/opt/app-root/workshop:Z'
     - '/opt/podman/{{ __bookbag_pod.name }}-pod/volumes/.ssh:/opt/app-root/src/.ssh:Z'
-    # - '/opt/podman/{{ __bookbag_pod.name }}-pod/volumes/envvars:/opt/app-root/envvars:Z'
     environment:
       - 'DEFAULT_PAGE=workshop'
       - 'APPLICATION_NAME=bookbag'

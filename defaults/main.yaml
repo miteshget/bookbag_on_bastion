@@ -12,12 +12,8 @@ bookbag_on_bastion_pods:
       state: started
       enabled: true
     environment:
-      - 'APPLICATION_NAME=bookbag'
-      - 'WORKSHOP_NAME=bookbag'
       - 'AUTH_USERNAME=bob'
       - 'AUTH_PASSWORD=redhat'
-      - 'ENABLE_SLIDES=true'
-      - 'APPLICATIONS_URL=http://bastion.example.com:5800'
       - 'WORKSHOP_VARS={ 
                   "guid": "gitOps1",
                   "subdomain_base_suffix": "red.ops.example.com", 

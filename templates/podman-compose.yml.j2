@@ -14,7 +14,7 @@ services:
     environment:
       - 'AUTH_USERNAME=bob'
       - 'AUTH_PASSWORD=redhat'
-      - 'WORKSHOP_VARS={ 
+      {# - 'WORKSHOP_VARS={ 
                   "guid": "gitOps1",
                   "subdomain_base_suffix": "red.ops.example.com", 
                   "gitlab_url": "https://utility.red.ops.example.com",
@@ -28,3 +28,4 @@ services:
                   "vscode_ui_url": "http://control.red.ops.example.com",
                   "vscode_ui_password": "redhat123"
                   }'
+      #}

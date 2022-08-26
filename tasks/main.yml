@@ -57,9 +57,9 @@
     mode: "u=rw,g=r,o=r"
 
 - name: Copy podman-compose file in orchestration dir
-  template:
-    src: "podman-compose.yml.j2"
-    dest: "/opt/podman/{{ __bookbag_pod.name }}-pod/podman-compose.yml"
+  copy:
+    content: "{{ lookup('template', 'podman-compose.yml.j2') | from_yaml | to_nice_json }}"
+    dest: "/opt/podman/{{ __bookbag_pod.name }}-pod/podman-compose.json"
     owner: root
     group: root
     mode: "u=rw,g=r,o=r"

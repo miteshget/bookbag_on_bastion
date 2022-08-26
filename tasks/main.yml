@@ -49,17 +49,17 @@
     mode: "0400"
 
 - name: Copy workshop-vars file in orchestration dir
-  template:
-    src: "workshop-vars.yml.j2"
-    dest: "/opt/podman/{{ __bookbag_pod.name }}-pod/workshop-vars.yml"
+  copy:
+    content: "{{ lookup('template','workshop-vars.yml.j2') | from_yaml | to_nice_json }}"
+    dest: "/opt/podman/{{ __bookbag_pod.name }}-pod/workshop-vars.json"
     owner: root
     group: root
     mode: "u=rw,g=r,o=r"
 
 - name: Copy podman-compose file in orchestration dir
-  copy:
-    content: "{{ lookup('template', 'podman-compose.yml.j2') | from_yaml | to_nice_json }}"
-    dest: "/opt/podman/{{ __bookbag_pod.name }}-pod/podman-compose.json"
+  template:
+    src: "podman-compose.yml.j2"
+    dest: "/opt/podman/{{ __bookbag_pod.name }}-pod/podman-compose.yml"
     owner: root
     group: root
     mode: "u=rw,g=r,o=r"

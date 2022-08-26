@@ -1,0 +1,37 @@
+version: 2
+services:
+  bookbag:
+    image: quay.io/openshifthomeroom/workshop-dashboard:5.0.0
+    container_name: bookbag
+    hostname: bookbag
+    restart: always
+    ports:
+     - '10080:10080'
+    volumes:
+    - '/opt/podman/{{ __bookbag_pod.name }}-pod/volumes/workshop:/opt/app-root/workshop:Z'
+    - '/opt/podman/{{ __bookbag_pod.name }}-pod/volumes/.ssh:/opt/app-root/src/.ssh:Z'
+    # - '/opt/podman/{{ __bookbag_pod.name }}-pod/volumes/envvars:/opt/app-root/envvars:Z'
+    environment:
+      - 'DEFAULT_PAGE=workshop'
+      - 'APPLICATION_NAME=bookbag'
+      - 'ENABLE_TERMINAL=true'
+      - 'WORKSHOP_NAME=bookbag'
+      - 'AUTH_USERNAME=bob'
+      - 'AUTH_PASSWORD=redhat'
+      - 'ENABLE_SLIDES=true'
+      - 'APPLICATIONS_URL=http://bastion.example.com:5800'
+
+      - 'WORKSHOP_VARS={ 
+                  "guid": "gitOps1",
+                  "subdomain_base_suffix": "red.ops.example.com", 
+                  "gitlab_url": "https://utility.red.ops.example.com",
+                  "gitlab_username": "devops",
+                  "gitlab_password": "redhat123",
+                  "tower_url": "https://tower.example.com",
+                  "tower_admin_user": "devops",
+                  "tower_admin_password": "redhat123",
+                  "ssh_command": "ssh pnm@control.red.ops.example.com",
+                  "ssh_password": "redhat123",
+                  "vscode_ui_url": "http://control.red.ops.example.com",
+                  "vscode_ui_password": "redhat123"
+                  }'

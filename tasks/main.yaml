@@ -1,0 +1,56 @@
+---
+- name: Set bookbag_on_bastion variable
+  set_fact:
+    __bookbag_pod: "{{ bookbag_on_bastion_pods.0 }}"
+
+- name: Create podman orchestration directory
+  file:
+    path: "/opt/podman/{{ __bookbag_pod.name }}-pod/"
+    state: directory
+    owner: root
+    group: root
+    recurse: true
+    mode: "u=rwx,g=rwx,o=rwx"
+
+- name: Create volume directory
+  file:
+    path: "/opt/podman/{{ __bookbag_pod.name }}-pod/volumes/.ssh"
+    state: directory
+    owner: root
+    group: root
+    recurse: true
+    mode: "u=rwx,g=rwx,o=rwx"
+
+- name: Clone git repo
+  git:
+    repo: "{{ bookbag_on_bastion_git_repo }}"
+    version: "{{ bookbag_on_bastion_git_version }}"
+    dest: /opt/podman/{{ __bookbag_pod.name }}-pod/volumes/
+    force: yes
+  
+- name: Copy podman-compose file in orchestration dir
+  template:
+    src: "podman-compose.yml.j2"
+    dest: "/opt/podman/{{ __bookbag_pod.name }}-pod/podman-compose.yml"
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+
+- name: Copy podman systemd service config
+  template:
+    src: "service.j2"
+    dest: "/usr/lib/systemd/system/{{ __bookbag_pod.name }}-pod.service"
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+
+- name: Reload systemd daemon
+  command: /usr/bin/systemctl daemon-reload
+  
+- name: Enable and Start pods
+  service:
+    name: "{{ __bookbag_pod.name }}-pod"
+    enabled: "{{ item.systemd.enabled | default(true) }}"
+    state: "{{ item.systemd.state | default('started') }}"
+  async: 3000
+  poll: 30

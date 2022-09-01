@@ -14,5 +14,5 @@ bookbag_on_bastion_pods:
       state: started
       enabled: true
     environment:
-      - 'AUTH_USERNAME=bob'
-      - 'AUTH_PASSWORD=redhat'
+      # - 'AUTH_USERNAME=admin'
+      # - 'AUTH_PASSWORD=redhat'

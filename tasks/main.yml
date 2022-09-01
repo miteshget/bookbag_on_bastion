@@ -1,9 +1,29 @@
 ---
+- name: Install podman runtime packages
+  yum:
+    name: 
+      - podman-2.2.1-7*
+      - python3
+    state: present
+
+- name: Install python library podman-compose for orchestration
+  pip:
+    name: podman-compose==0.1.5
+    state: present
+
 - name: Set bookbag_on_bastion variable
   set_fact:
     __bookbag_pod: "{{ bookbag_on_bastion_pods.0 }}"
     __bookbag_pod_username: "{{ bookbag_on_bastion_pod_username }}"
     __bookbag_pod_password: "{{ bookbag_on_bastion_pod_password }}"
+
+- name: Find workshop-vars
+  vars:
+    workshop_vars_file:
+      - bookbag-workshop-vars.yml.j2
+      - sample-workshop-vars.yml.j2
+  set_fact:
+    __bookbag_pod_workshop_vars: "{{ lookup('first_found', workshop_vars_file) }}"
 
 - name: Create podman orchestration directory
   file:
@@ -50,7 +70,7 @@
 
 - name: Copy workshop-vars file in orchestration dir
   copy:
-    content: "{{ lookup('template','workshop-vars.yml.j2') | from_yaml | to_nice_json }}"
+    content: "{{ lookup('template',__bookbag_pod_workshop_vars) | from_yaml | to_nice_json }}"
     dest: "/opt/podman/{{ __bookbag_pod.name }}-pod/workshop-vars.json"
     owner: root
     group: root

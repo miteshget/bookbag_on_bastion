@@ -1,13 +1,13 @@
 ---
-- name: Install podman runtime packages
-  dnf:
-    name: podman-2.2.1-7*
-    state: installed
+# - name: Install podman runtime packages
+#   dnf:
+#     name: podman-2.2.1-7*
+#     state: installed
 
-- name: Install python library podman-compose for orchestration
-  pip:
-    name: podman-compose==0.1.5
-    state: present
+# - name: Install python library podman-compose for orchestration
+#   pip:
+#     name: podman-compose==0.1.5
+#     state: present
 
 - name: Set bookbag_on_bastion variable
   set_fact:

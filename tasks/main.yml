@@ -1,9 +1,7 @@
 ---
 - name: Install podman runtime packages
   yum:
-    name: 
-      - podman-2.2.1-7*
-      - python3
+    name: podman-2.2.1-7*
     state: installed
 
 - name: Install python library podman-compose for orchestration

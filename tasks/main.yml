@@ -19,7 +19,7 @@
   vars:
     workshop_vars_file:
       - bookbag-workshop-vars.yml.j2
-      - sample-workshop-vars.yml.j2
+      - templates/sample-workshop-vars.yml.j2
   set_fact:
     __bookbag_pod_workshop_vars: "{{ lookup('first_found', workshop_vars_file) }}"
 
